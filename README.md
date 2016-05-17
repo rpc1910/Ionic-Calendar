@@ -154,3 +154,14 @@ Parameter: value
 The whole event source object
 
         $scope.$broadcast('eventSourceChanged',$scope.eventSource);
+
+
+*changeMonth
+This event is triggered when there is a change in the calendar month
+
+```javascript
+$scope.$on('changeCalendarMonth', function(event, args){
+    // ...
+});
+
+```

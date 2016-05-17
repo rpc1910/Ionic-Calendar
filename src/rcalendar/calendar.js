@@ -17,7 +17,7 @@ angular.module('ui.rCalendar', [])
         queryMode: 'local',
         step: 60
     })
-    .controller('ui.rCalendar.CalendarController', ['$scope', '$attrs', '$parse', '$interpolate', '$log', 'dateFilter', 'calendarConfig', '$timeout', '$ionicSlideBoxDelegate', function ($scope, $attrs, $parse, $interpolate, $log, dateFilter, calendarConfig, $timeout, $ionicSlideBoxDelegate) {
+    .controller('ui.rCalendar.CalendarController', ['$scope', '$attrs', '$parse', '$interpolate', '$log', 'dateFilter', 'calendarConfig', '$timeout', '$ionicSlideBoxDelegate', '$rootScope', function ($scope, $attrs, $parse, $interpolate, $log, dateFilter, calendarConfig, $timeout, $ionicSlideBoxDelegate, $rootScope) {
         'use strict';
         var self = this,
             ngModelCtrl = {$setViewValue: angular.noop}; // nullModelCtrl;
@@ -239,6 +239,8 @@ angular.module('ui.rCalendar', [])
             ngModelCtrl.$setViewValue(self.currentCalendarDate);
             self.refreshView();
             self.direction = 0;
+
+            $rootScope.$broadcast('changeCalendarMonth', self.currentDate);
         };
 
         self.rangeChanged = function () {
@@ -345,7 +347,8 @@ angular.module('ui.rCalendar', [])
                 rangeChanged: '&',
                 eventSelected: '&',
                 timeSelected: '&',
-                titleChanged: '&'
+                titleChanged: '&',
+                changeMonth: '&'
             },
             require: ['calendar', '?^ngModel'],
             controller: 'ui.rCalendar.CalendarController',
